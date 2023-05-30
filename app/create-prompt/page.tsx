@@ -8,7 +8,7 @@ import { Form } from '@components'
 
 const CreatePrompt = () => {
 
-  const { data: session } = useSession();
+  const { data: session }: any = useSession();
   const router = useRouter();
 
 

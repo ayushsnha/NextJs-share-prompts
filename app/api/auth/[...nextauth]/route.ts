@@ -6,12 +6,12 @@ import User from '@models/user'
 const handler = NextAuth({
     providers: [
         GooleProvider({
-            clientId: process.env.GOOGLE_ID,
-            clientSecret: process.env.GOOGLE_CLIENT_SECRET
+            clientId: process.env.GOOGLE_ID || '',
+            clientSecret: process.env.GOOGLE_CLIENT_SECRET||''
         })
     ],
     callbacks: {
-        async session({ session }) {
+        async session({ session }:any) {
             const sessionUser = await User.findOne({
                 email: session.user.email,
             })
@@ -21,7 +21,7 @@ const handler = NextAuth({
             return session;
 
         },
-        async signIn({ profile }) {
+        async signIn({ profile }:any) {
             try {
                 await connectToDB();
 
