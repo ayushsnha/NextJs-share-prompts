@@ -5,7 +5,6 @@ export const GET = async (request: any) => {
     const url = new URL(request.url);
     const searchParams = url.searchParams;
     const search = searchParams.get('search') || '';
-    console.log(search)
     const regex = new RegExp(search, "i");
   try {
     await connectToDB();
