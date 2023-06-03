@@ -21,13 +21,13 @@ const Feed = () => {
     const [searchText, setSearchText] = useState('');
     const [posts, setPosts] = useState([])
 
-    const handleSearchChange = (e: ChangeEvent) => {
-
+    const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
+        setSearchText(e.target.value)
     }
 
     useEffect(() => {
         const fetchPosts = async () => {
-            const response = await fetch('/api/prompt', {
+            const response = await fetch(`/api/prompt?search=${searchText}`, {
                 method: 'GET',
                 headers: {
                     "Cache-Control": "no-store"
@@ -39,7 +39,7 @@ const Feed = () => {
         }
 
         fetchPosts()
-    }, [])
+    }, [searchText])
 
     return (
         <section className='feed'>

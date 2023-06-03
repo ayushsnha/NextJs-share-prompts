@@ -2,10 +2,15 @@ import { connectToDB } from '@utils/database';
 import Prompt from '@models/prompt';
 
 export const GET = async (request: any) => {
+    const url = new URL(request.url);
+    const searchParams = url.searchParams;
+    const search = searchParams.get('search') || '';
+    console.log(search)
+    const regex = new RegExp(search, "i");
   try {
     await connectToDB();
 
-    const prompts = await Prompt.find({}).populate('creator');
+    const prompts = await Prompt.find({ prompt: { $regex: regex } }).populate('creator');
 
     const headers = {
       'Content-Type': 'application/json',
