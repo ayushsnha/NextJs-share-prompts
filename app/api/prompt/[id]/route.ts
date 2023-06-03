@@ -7,10 +7,15 @@ export const GET = async (request:any, {params}:any) => {
 
         const prompt = await Prompt.findById(params.id).populate('creator');
 
+        const headers = {
+            'Content-Type': 'application/json',
+            'Cache-Control': 'no-store', // Disable caching
+        };
+
         if(!prompt) 
         return new Response("Prompt not found", {status: 404});
 
-        return new Response(JSON.stringify(prompt), { status: 200 })
+        return new Response(JSON.stringify(prompt), { status: 200, headers })
     } catch (err) {
         return new Response("Failed to fetch Prompt", { status: 500 })
     }
